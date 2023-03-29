@@ -1,0 +1,56 @@
+
+<div class="col-12 p-3 border m-2">
+    <p class="fs-3 text-success border-bottom">User Data</p>
+
+    <ng-container
+    
+    *ngTemplateOutlet="recursiveListTmpl; context : {list : jsonData}"
+    ></ng-container>
+
+    <ng-template #recursiveListTmpl let-list="list">
+        <!-- <ul *ngFor="let item of list" class="list-group">
+            <p class="list-group-item fas" role="button" [ngClass]="{'fa-folder-open' : item.childCount !== 0, 'fa-file-lines' : func(item.name) }">{{ item.name}} {{ item.childCount}}</p>
+            <li *ngIf="item.childCount > 0" class="list-group-item">
+                <ng-container
+                *ngTemplateOutlet="recursiveListTmpl; context: {list : item.childs}"
+                >
+                </ng-container>
+            </li>
+        </ul> -->
+        <details *ngFor="let item of list">
+            <!-- <summary class="fa" [ngClass]="{'fa-folder-open' : item.childCount !== 0, 'fa-file-lines' : func(item.name)}">{{item.name}} {{item.childCount}}</summary> -->
+            <summary *ngIf="(item.childCount !== 0); else elseBlock" class="fas fa-folder">{{item.name}} {{item.childCount}}</summary>
+                <ng-template #elseBlock>
+                    <summary class="fas fa-folder">{{item.name}}</summary>
+                    <p class="fas fa-file-lines">{{item.name}} {{item.childCount}}</p>
+                </ng-template>
+            <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context: {list : item.childs}"
+            >
+            </ng-container>
+        </details>
+    </ng-template>
+
+    <details>
+        <summary> Prashanth</summary>
+    </details>
+</div>
+
+<!-- 
+    <ul>  
+   <ng-container  
+   *ngTemplateOutlet="recursiveListTmpl; context:{ list: tableOfContents }"  
+   ></ng-container>  
+</ul>  
+  
+<ng-template #recursiveListTmpl let-list="list">  
+   <ul *ngFor="let item of list">  
+      {{item.index}} {{ item.title }}  
+      <li *ngIf="item.children.length > 0">  
+         <ng-container  
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.children }"  
+         ></ng-container>  
+      </li>  
+   </ul>  
+</ng-template> 
+ -->
